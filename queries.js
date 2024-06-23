@@ -106,7 +106,7 @@ const deleteUser = async (id) => {
   }
 };
 
-const addTransfer = async (emisorName, receptorName, monto) => {
+const addTransfer = async (emisorName, receptorName, amount) => {
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
@@ -119,15 +119,15 @@ const addTransfer = async (emisorName, receptorName, monto) => {
 
     const deductQuery = {
       text: "UPDATE usuarios SET balance = balance - $1 WHERE id = $2 RETURNING *",
-      values: [monto, emisor],
+      values: [amount, emisor],
     };
     const addQuery = {
       text: "UPDATE usuarios SET balance = balance + $1 WHERE id = $2 RETURNING *",
-      values: [monto, receptor],
+      values: [amount, receptor],
     };
     const transferQuery = {
       text: "INSERT INTO transferencias (emisor, receptor, monto, fecha) VALUES ($1, $2, $3, NOW()) RETURNING *",
-      values: [emisor, receptor, monto],
+      values: [emisor, receptor, amount],
     };
 
     const deductRes = await client.query(deductQuery);
