@@ -10,7 +10,7 @@ This project is a Node.js application that interacts with a PostgreSQL database 
 
 ## Installation
 
-1. Clone the repository to your local machine:
+1. Clone the repository to your local machine
 
 2. Install the required dependencies:
 
